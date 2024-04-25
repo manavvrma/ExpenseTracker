@@ -1,6 +1,5 @@
 package de.hsm.controller;
 
-
 import de.hsm.persistent.Expense;
 import de.hsm.persistent.Participant;
 import de.hsm.persistent.User;
@@ -19,8 +18,8 @@ import java.util.List;
 @Controller
 public class LoginController {
 
-    public static  List<Participant> participantList = new ArrayList<>();
-    public static  List<User> userList = new ArrayList<>();
+    public static List<Participant> participantList = new ArrayList<>();
+    public static List<User> userList = new ArrayList<>();
 
     @GetMapping("/")
     public String index(Model model) {
@@ -45,10 +44,9 @@ public class LoginController {
         return "login";
     }
 
-
     @PostMapping("/login")
     public String login(@Valid User usr, BindingResult bindingResult, Model model) {
-        if(userList.contains(usr)) {
+        if (userList.contains(usr)) {
             model.addAttribute("expense", new ArrayList<Expense>());
             return "redirect:/participant";
         } else {
@@ -56,7 +54,6 @@ public class LoginController {
             return "redirect:/login";
         }
     }
-
 
     @GetMapping("/participant")
     public String participants(Model model) {
@@ -70,7 +67,7 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return "template";
         }
-        participant.setParticipantId(participantList.size()+1);
+        participant.setParticipantId(participantList.size() + 1);
         participantList.add(participant);
         model.addAttribute("participant", participant);
         model.addAttribute("participantList", participantList);
@@ -80,9 +77,9 @@ public class LoginController {
     @GetMapping("/deleteparticipant/{participantId}")
     public String delete(@PathVariable int participantId) {
         Iterator itr = participantList.iterator();
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             Participant p = (Participant) itr.next();
-            if(p.getParticipantId() == participantId)
+            if (p.getParticipantId() == participantId)
                 itr.remove();
         }
 
